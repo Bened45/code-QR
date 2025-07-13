@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Générateur de QR Code</title>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<style>
+body {
+font-family: 'Segoe UI', sans-serif;
+background: linear-gradient(to right, #e0f7fa, #ffffff);
+margin: 0;
+padding: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+min-height: 100vh;
+}
+.container {
+background: #ffffff;
+border-radius: 20px;
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+padding: 30px;
+max-width: 450px;
+width: 100%;
+text-align: center;
+transition: all 0.3s ease-in-out;
+}
+h2 {
+color: #00796b;
+margin-bottom: 20px;
+}
+input[type="text"] {
+width: 90%;
+padding: 12px;
+border-radius: 10px;
+border: 1px solid #ccc;
+font-size: 16px;
+margin-bottom: 15px;
+outline: none;
+}
+.color-pickers {
+display: flex;
+justify-content: center;
+gap: 10px;
+margin-bottom: 20px;
+}
+.color-pickers label {
+font-size: 14px;
+margin-right: 5px;
+}
+button {
+background-color: #00796b;
+color: white;
+padding: 12px 25px;
+border: none;
+border-radius: 10px;
+font-size: 16px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+button:hover {
+background-color: #004d40;
+}
+#qrcode {
+margin-top: 20px;
+padding: 10px;
+background: #f1f1f1;
+border-radius: 12px;
+display: inline-block;
+}
+#downloadBtn {
+margin-top: 15px;
+display: none;
+background-color: #388e3c;
+}
+#message {
+color: green;
+margin-top: 10px;
+}
+@media screen and (max-width: 480px) {
+.color-pickers {
+flex-direction: column;
+align-items: center;
+}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h2> Générateur de QR Code</h2>
+<input type="text" id="text" placeholder="Entrez un texte ou une URL"
+oninput="checkInput()" />
+<div class="color-pickers">
+<div>
+<label>QR :</label>
+<input type="color" id="qrColor" value="#000000">
+</div>
+<div>
+<label>Fond :</label>
+<input type="color" id="bgColor" value="#ADFF2F">
+</div>
+</div>
+<button id="generateBtn" onclick="generateQRCode()" disabled>Générer</button>
+<div id="qrcode"></div>
+<button id="downloadBtn" onclick="downloadQR()">Télécharger</button>
+<div id="message"></div>
+</div>
+<script>
+function checkInput() {
+const text = document.getElementById("text").value.trim();
+document.getElementById("generateBtn").disabled = text === "";
+}
+function generateQRCode() {
+const text = document.getElementById("text").value.trim();
+const qrColor = document.getElementById("qrColor").value;
+const bgColor = document.getElementById("bgColor").value;
+if (!text) return;
+document.getElementById("qrcode").innerHTML = "";
+const qr = new QRCode(document.getElementById("qrcode"), {
+text: text,
+width: 256,
+height: 256,
+colorDark: qrColor,
+colorLight: bgColor,
+correctLevel: QRCode.CorrectLevel.H
+});
+setTimeout(() => {
+document.getElementById("downloadBtn").style.display = "inline-block";
+document.getElementById("message").textContent = "QR Code généré avec succès
+!";
+}, 500);
+}
+function downloadQR() {
+const canvas = document.querySelector("#qrcode canvas");
+const link = document.createElement('a');
+link.href = canvas.toDataURL("image/png");
+link.download = "qr_code.png";
+link.click();
+}
+</script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Générateur de QR Code</title>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<style>
+body {
+font-family: 'Segoe UI', sans-serif;
+background: linear-gradient(to right, #e0f7fa, #ffffff);
+margin: 0;
+padding: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+min-height: 100vh;
+}
+.container {
+background: #ffffff;
+border-radius: 20px;
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+padding: 30px;
+max-width: 450px;
+width: 100%;
+text-align: center;
+transition: all 0.3s ease-in-out;
+}
+h2 {
+color: #00796b;
+margin-bottom: 20px;
+}
+input[type="text"] {
+width: 90%;
+padding: 12px;
+border-radius: 10px;
+border: 1px solid #ccc;
+font-size: 16px;
+margin-bottom: 15px;
+outline: none;
+}
+.color-pickers {
+display: flex;
+justify-content: center;
+gap: 10px;
+margin-bottom: 20px;
+}
+.color-pickers label {
+font-size: 14px;
+margin-right: 5px;
+}
+button {
+background-color: #00796b;
+color: white;
+padding: 12px 25px;
+border: none;
+border-radius: 10px;
+font-size: 16px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+button:hover {
+background-color: #004d40;
+}
+#qrcode {
+margin-top: 20px;
+padding: 10px;
+background: #f1f1f1;
+border-radius: 12px;
+display: inline-block;
+}
+#downloadBtn {
+margin-top: 15px;
+display: none;
+background-color: #388e3c;
+}
+#message {
+color: green;
+margin-top: 10px;
+}
+@media screen and (max-width: 480px) {
+.color-pickers {
+flex-direction: column;
+align-items: center;
+}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>🔳 Générateur de QR Code</h2>
+<input type="text" id="text" placeholder="Entrez un texte ou une URL"
+oninput="checkInput()" />
+<div class="color-pickers">
+<div>
+<label>QR :</label>
+<input type="color" id="qrColor" value="#000000">
+</div>
+<div>
+<label>Fond :</label>
+<input type="color" id="bgColor" value="#ADFF2F">
+</div>
+</div>
+<button id="generateBtn" onclick="generateQRCode()" disabled>Générer</button>
+<div id="qrcode"></div>
+<button id="downloadBtn" onclick="downloadQR()">Télécharger</button>
+<div id="message"></div>
+</div>
+<script>
+function checkInput() {
+const text = document.getElementById("text").value.trim();
+document.getElementById("generateBtn").disabled = text === "";
+}
+function generateQRCode() {
+const text = document.getElementById("text").value.trim();
+const qrColor = document.getElementById("qrColor").value;
+const bgColor = document.getElementById("bgColor").value;
+if (!text) return;
+document.getElementById("qrcode").innerHTML = "";
+const qr = new QRCode(document.getElementById("qrcode"), {
+text: text,
+width: 256,
+height: 256,
+colorDark: qrColor,
+colorLight: bgColor,
+correctLevel: QRCode.CorrectLevel.H
+});
+setTimeout(() => {
+document.getElementById("downloadBtn").style.display = "inline-block";
+document.getElementById("message").textContent = "QR Code généré avec succès!";
+}, 500);
+}
+function downloadQR() {
+const canvas = document.querySelector("#qrcode canvas");
+const link = document.createElement('a');
+link.href = canvas.toDataURL("image/png");
+link.download = "qr_code.png";
+link.click();
+}
+</script>
+</body>
+</html>
